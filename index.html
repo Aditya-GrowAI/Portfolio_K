@@ -1173,155 +1173,7 @@
       transform: scaleX(1);
     }
 
-    /* ─── SECTION: CLIENT WORK ─── */
-    #clients {
-      background: var(--bg2);
-    }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      max-width: 1100px;
-    }
-
-    .project-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      padding: 0;
-      border-radius: 2px;
-      overflow: hidden;
-      transition: all .4s ease;
-      cursor: none;
-    }
-
-    .project-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(201, 168, 76, 0.08);
-      transform: translateY(-4px);
-    }
-
-    .project-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #111 0%, #1a1508 100%);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .project-thumb-text {
-      font-family: var(--font-display);
-      font-size: 40px;
-      letter-spacing: 4px;
-      color: rgba(201, 168, 76, 0.25);
-      text-align: center;
-    }
-
-    .before-after {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      overflow: hidden;
-    }
-
-    .ba-before,
-    .ba-after {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .ba-before {
-      background: #1a1a1a;
-      color: #555;
-      border-right: 1px solid rgba(201, 168, 76, 0.2);
-    }
-
-    .ba-after {
-      background: #0d1208;
-      color: var(--gold);
-    }
-
-    .project-body {
-      padding: 24px;
-    }
-
-    .project-client {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .project-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      letter-spacing: 2px;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    .project-desc {
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.7;
-      font-style: italic;
-      margin-bottom: 16px;
-    }
-
-    .metrics {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 16px;
-    }
-
-    .metric {
-      text-align: center;
-    }
-
-    .metric-val {
-      font-family: var(--font-display);
-      font-size: 22px;
-      color: var(--gold);
-    }
-
-    .metric-key {
-      font-family: var(--font-mono);
-      font-size: 8px;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-    }
-
-    .testimonial {
-      border-top: 1px solid var(--glass-border);
-      padding-top: 14px;
-      margin-top: 4px;
-      font-size: 13px;
-      font-style: italic;
-      color: #7a7270;
-      line-height: 1.6;
-    }
-
-    .testimonial cite {
-      display: block;
-      margin-top: 6px;
-      font-style: normal;
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--gold-dark);
-    }
 
     /* ─── SECTION: CONTACT ─── */
     #contact {
@@ -1561,7 +1413,7 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#showreel">Showreel</a></li>
       <li><a href="#workflow">Process</a></li>
-      <li><a href="#clients">Work</a></li>
+
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -1576,7 +1428,7 @@
       <p class="hero-tagline">Cinematic Video Editor<br>Motion Designer · Storyteller</p>
       <div class="cta-group" style="margin-top:20px;">
         <a href="#showreel" class="btn btn-primary">▶ Watch Showreel</a>
-        <a href="#clients" class="btn btn-outline">View Projects</a>
+        <a href="#showreel" class="btn btn-outline">View Projects</a>
       </div>
     </div>
 
@@ -1983,107 +1835,10 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════ CLIENT WORK ═══ -->
-  <section id="clients">
-    <div class="section-badge reveal">Section 05</div>
-    <h2 class="section-title reveal">Client<br>Projects</h2>
-    <div class="project-grid">
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <div class="before-after">
-            <div class="ba-before">Before</div>
-            <div class="ba-after">After ✦</div>
-          </div>
-        </div>
-        <div class="project-body">
-          <div class="project-client">Fashion Brand</div>
-          <div class="project-title">AURA Collection Launch</div>
-          <div class="project-desc">A 90-second cinematic brand film showcasing the SS24 collection. Directed, shot, and
-            edited from concept to delivery in 5 days.</div>
-          <div class="metrics">
-            <div class="metric">
-              <div class="metric-val">4.2M</div>
-              <div class="metric-key">Views</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">340%</div>
-              <div class="metric-key">ROI Lift</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">12K</div>
-              <div class="metric-key">Shares</div>
-            </div>
-          </div>
-          <div class="testimonial">"Kanna understood our brand language immediately. The final cut exceeded every
-            expectation." <cite>— Priya Menon, Creative Director</cite></div>
-        </div>
-      </div>
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <div class="before-after">
-            <div class="ba-before">Before</div>
-            <div class="ba-after">After ✦</div>
-          </div>
-        </div>
-        <div class="project-body">
-          <div class="project-client">Music Artist</div>
-          <div class="project-title">REFLECTIONS — Music Video</div>
-          <div class="project-desc">An introspective music video blending live performance with abstract motion graphics
-            and teal-orange color work.</div>
-          <div class="metrics">
-            <div class="metric">
-              <div class="metric-val">1.8M</div>
-              <div class="metric-key">Views</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">92%</div>
-              <div class="metric-key">Like Rate</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">Top 10</div>
-              <div class="metric-key">Trending</div>
-            </div>
-          </div>
-          <div class="testimonial">"The colour grade alone felt like a new dimension. Absolute cinema." <cite>— Arjun
-              Sharma, Artist</cite></div>
-        </div>
-      </div>
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <div class="before-after">
-            <div class="ba-before">Before</div>
-            <div class="ba-after">After ✦</div>
-          </div>
-        </div>
-        <div class="project-body">
-          <div class="project-client">Travel Channel</div>
-          <div class="project-title">GOLDEN HOUR — Rajasthan</div>
-          <div class="project-desc">A 12-minute documentary travel film across the desert state, graded with a warm
-            oxidised-film look and custom LUT.</div>
-          <div class="metrics">
-            <div class="metric">
-              <div class="metric-val">5.1M</div>
-              <div class="metric-key">Views</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">28K</div>
-              <div class="metric-key">Subs Gained</div>
-            </div>
-            <div class="metric">
-              <div class="metric-val">4.9★</div>
-              <div class="metric-key">Rating</div>
-            </div>
-          </div>
-          <div class="testimonial">"This video changed our channel trajectory entirely." <cite>— Deepak Rao,
-              Creator</cite></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ═══════════════════════════════════ CONTACT ═══ -->
   <section id="contact">
-    <div class="section-badge" style="justify-content:center;">Section 06</div>
+    <div class="section-badge" style="justify-content:center;">Section 05</div>
     <h2 class="section-title" style="text-align:center;">Let's Create<br>Together</h2>
     <div class="gold-line"></div>
     <p
@@ -2146,7 +1901,7 @@
       requestAnimationFrame(animRing);
     })();
 
-    document.querySelectorAll('a, button, .video-card, .skill-card, .contact-card, .project-card').forEach(el => {
+    document.querySelectorAll('a, button, .video-card, .skill-card, .contact-card').forEach(el => {
       el.addEventListener('mouseenter', () => {
         cursor.style.width = '20px';
         cursor.style.height = '20px';
@@ -2327,7 +2082,7 @@
       });
 
       // ─── Lightweight section reveals (no blur — GPU-friendly) ───
-      const sections = gsap.utils.toArray('#about, #skills, #showreel, #workflow, #clients, #contact');
+      const sections = gsap.utils.toArray('#about, #skills, #showreel, #workflow, #contact');
       sections.forEach(sec => {
         gsap.fromTo(sec,
           { opacity: 0, y: 50 },
@@ -2396,14 +2151,7 @@
         }
       );
 
-      // Stagger project cards
-      gsap.fromTo('.project-card',
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1, y: 0, duration: 0.6, stagger: 0.1,
-          scrollTrigger: { trigger: '#clients', start: 'top 75%', end: 'top 45%', scrub: 0.5 }
-        }
-      );
+
 
       // Workflow steps stagger
       gsap.fromTo('.wf-step',
