@@ -767,139 +767,318 @@
       background: var(--bg2);
     }
 
-    .category-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .tab {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 10px 18px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: transparent;
-      color: var(--text-dim);
-      cursor: none;
-      transition: all .3s;
-    }
-
-    .tab.active,
-    .tab:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(201, 168, 76, 0.06);
-    }
-
-    .reel-grid {
+    .showreel-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      max-width: 1200px;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    .reel-card {
+    /* Featured card spans full width */
+    .video-card--featured {
+      grid-column: 1 / -1;
+    }
+
+    /* ─── GLASSMORPHISM VIDEO CARD ─── */
+    .video-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      cursor: none;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(.25, 1, .5, 1),
+                  box-shadow 0.5s cubic-bezier(.25, 1, .5, 1),
+                  border-color 0.4s ease;
+      will-change: transform;
+      opacity: 0;
+      animation: videoCardFadeIn 0.8s ease forwards;
+    }
+
+    .video-card:nth-child(1) { animation-delay: 0.1s; }
+    .video-card:nth-child(2) { animation-delay: 0.25s; }
+    .video-card:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes videoCardFadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .video-card:hover {
+      border-color: var(--gold);
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.7),
+        0 0 60px rgba(201, 168, 76, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    /* Top edge glow */
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: 5;
+    }
+    .video-card:hover::before { opacity: 0.7; }
+
+    /* ─── THUMBNAIL AREA ─── */
+    .video-card__thumb {
       position: relative;
       aspect-ratio: 16/9;
       overflow: hidden;
-      cursor: none;
-      background: #111;
+      background: #0a0a0a;
     }
 
-    .reel-thumb {
+    .video-card--featured .video-card__thumb {
+      aspect-ratio: 16/9;
+    }
+
+    .video-card__thumb-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform .6s ease, filter .6s ease;
-      filter: saturate(.85) brightness(1);
+      transition: transform 0.7s cubic-bezier(.25, 1, .5, 1),
+                  filter 0.7s ease;
+      filter: saturate(0.8) brightness(0.85);
     }
 
-    .reel-card:hover .reel-thumb {
-      transform: scale(1.05);
-      filter: saturate(1) brightness(2);
+    .video-card:hover .video-card__thumb-img {
+      transform: scale(1.06);
+      filter: saturate(1) brightness(1);
     }
 
-    .reel-overlay {
+    /* Cinematic gradient overlay */
+    .video-card__gradient {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 50%);
-      opacity: 0;
-      transition: opacity .3s;
-      display: flex;
-      align-items: flex-end;
-      padding: 20px;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 35%, transparent 60%),
+        linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 25%);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .reel-card:hover .reel-overlay {
-      opacity: 1;
-    }
-
-    .reel-info {}
-
-    .reel-cat {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    .reel-title {
-      font-family: var(--font-display);
-      font-size: 20px;
-      letter-spacing: 2px;
-      color: white;
-    }
-
-    .play-btn {
+    /* Hover shimmer sweep */
+    .video-card__shimmer {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(201, 168, 76, 0.06) 45%,
+        rgba(201, 168, 76, 0.12) 50%,
+        rgba(201, 168, 76, 0.06) 55%,
+        transparent 60%
+      );
+      transform: translateX(-100%);
+      transition: none;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .video-card:hover .video-card__shimmer {
+      animation: shimmerSweep 1.2s ease forwards;
+    }
+
+    @keyframes shimmerSweep {
+      to { transform: translateX(100%); }
+    }
+
+    /* Play button */
+    .video-card__play {
+      position: absolute;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0);
-      width: 60px;
-      height: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      width: 72px; height: 72px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
       border-radius: 50%;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform .3s ease, border-color .3s;
-      color: white;
+      z-index: 3;
+      transition: all 0.4s cubic-bezier(.25, 1, .5, 1);
+      cursor: none;
     }
 
-    .reel-card:hover .play-btn {
+    .video-card__play svg {
+      width: 24px; height: 24px;
+      fill: white;
+      margin-left: 3px;
+      transition: fill 0.3s;
+    }
+
+    .video-card:hover .video-card__play {
       transform: translate(-50%, -50%) scale(1);
     }
 
-    .reel-card:hover .play-btn:hover {
+    .video-card__play:hover {
       border-color: var(--gold);
-      color: var(--gold);
+      background: rgba(201, 168, 76, 0.15);
     }
+    .video-card__play:hover svg { fill: var(--gold); }
 
-    /* The actual hero portrait video embed frame */
-    .reel-main {
-      aspect-ratio: 16/9;
-      background: #000;
+    /* ─── CARD BODY ─── */
+    .video-card__body {
+      padding: 24px 28px;
       position: relative;
-      margin-bottom: 16px;
-      overflow: hidden;
-      max-width: 1200px;
+      z-index: 2;
     }
 
-    .reel-main video {
+    .video-card__badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .video-card__badge::before {
+      content: '';
+      display: inline-block;
+      width: 18px; height: 1px;
+      background: var(--gold);
+    }
+
+    .video-card__title {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.5vw, 32px);
+      letter-spacing: 3px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .video-card__desc {
+      font-size: 14px;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    /* ─── INLINE REEL GRID (2-col for smaller cards) ─── */
+    .showreel-sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .showreel-sub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── CINEMATIC FULLSCREEN MODAL ─── */
+    #yt-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99000;
+      background: rgba(0, 0, 0, 0.97);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    #yt-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Letterbox bars */
+    .modal-letterbox {
+      position: absolute;
+      left: 0; right: 0;
+      height: 8vh;
+      background: #000;
+      z-index: 2;
+    }
+    .modal-letterbox--top { top: 0; }
+    .modal-letterbox--bottom { bottom: 0; }
+
+    #yt-modal-close {
+      position: absolute;
+      top: max(8vh + 12px, 32px);
+      right: 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--text-dim);
+      cursor: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 20px;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+
+    #yt-modal-close:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    #yt-modal-frame-wrap {
+      width: min(960px, 90vw);
+      aspect-ratio: 9/16;
+      max-height: 80vh;
+      position: relative;
+      z-index: 5;
+      border: 1px solid rgba(201, 168, 76, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 0 120px rgba(201, 168, 76, 0.08);
+    }
+
+    #yt-modal-frame-wrap iframe {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      border: none;
     }
 
-    .reel-main-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
-      pointer-events: none;
+    /* Modal title */
+    .modal-title-bar {
+      margin-top: 20px;
+      text-align: center;
+      z-index: 5;
+    }
+
+    .modal-title-bar__cat {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .modal-title-bar__name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 4px;
+      color: var(--text);
+      margin-top: 4px;
     }
 
     /* ─── SECTION: WORKFLOW ─── */
@@ -1263,63 +1442,7 @@
       pointer-events: none;
     }
 
-    /* ─── VIDEO MODAL ─── */
-    #modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99000;
-      background: rgba(0, 0, 0, 0.95);
-      align-items: center;
-      justify-content: center;
-    }
 
-    #modal.open {
-      display: flex;
-    }
-
-    #modal-close {
-      position: absolute;
-      top: 24px;
-      right: 32px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--text-dim);
-      cursor: none;
-      background: none;
-      border: none;
-      transition: color .3s;
-    }
-
-    #modal-close:hover {
-      color: var(--gold);
-    }
-
-    #modal-inner {
-      width: min(900px, 90vw);
-      aspect-ratio: 16/9;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      border: 1px solid var(--glass-border);
-    }
-
-    #modal-inner video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    #modal-placeholder {
-      font-family: var(--font-display);
-      font-size: 32px;
-      letter-spacing: 4px;
-      color: rgba(201, 168, 76, 0.3);
-      text-align: center;
-    }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
@@ -1505,7 +1628,7 @@
         <div class="about-text reveal">
           <p>Every frame is a brushstroke. Every cut, a heartbeat. I'm Kanna Narayana — a cinematic editor who
             transforms raw footage into stories that move people.</p>
-          <p>With over 6 years of mastering the language of visual storytelling, I've carved out a space where technical
+          <p>With over 2 years of mastering the language of visual storytelling, I've carved out a space where technical
             precision meets raw artistic instinct.</p>
           <p>From high-concept commercials to intimate travel films, I approach every project with the same discipline:
             find the soul of the story, then sculpt the edit around it.</p>
@@ -1515,19 +1638,19 @@
       <div>
         <div class="about-stats">
           <div class="stat-card reveal">
-            <div class="stat-num">6+</div>
+            <div class="stat-num">2+</div>
             <div class="stat-label">Years Experience</div>
           </div>
           <div class="stat-card reveal">
-            <div class="stat-num">200+</div>
+            <div class="stat-num">50+</div>
             <div class="stat-label">Projects Delivered</div>
           </div>
           <div class="stat-card reveal">
-            <div class="stat-num">50M+</div>
+            <div class="stat-num">1M+</div>
             <div class="stat-label">Views Generated</div>
           </div>
           <div class="stat-card reveal">
-            <div class="stat-num">98%</div>
+            <div class="stat-num">95%</div>
             <div class="stat-label">Client Satisfaction</div>
           </div>
         </div>
@@ -1722,125 +1845,75 @@
     <div class="section-badge reveal">Section 03</div>
     <h2 class="section-title reveal">Showreel</h2>
 
-    <!-- Main reel: the portrait video used as featured piece -->
-    <div class="reel-main reveal" id="main-reel-wrap">
-      <video id="reel-main-video" muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"
-        onmouseenter="this.play()" onmouseleave="this.pause()">
-        <source src="portrait.mp4" type="video/mp4" />
-      </video>
-      <div class="reel-main-overlay"></div>
-      <div style="position:absolute;bottom:24px;left:24px;z-index:2;">
-        <div
-          style="font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;">
-          Featured Work</div>
-        <div style="font-family:var(--font-display);font-size:28px;letter-spacing:3px;color:white;">Cinematic Portrait
+    <!-- ── FEATURED REEL (full width) ── -->
+    <div class="showreel-grid reveal">
+      <div class="video-card video-card--featured" data-yt-id="UOCLIie7Yoo" data-yt-cat="Featured Reel" data-yt-title="FEATURED REEL">
+        <div class="video-card__thumb">
+          <img class="video-card__thumb-img" src="https://img.youtube.com/vi/UOCLIie7Yoo/hqdefault.jpg" alt="Featured Reel — Kanna Narayana" loading="lazy" />
+          <div class="video-card__gradient"></div>
+          <div class="video-card__shimmer"></div>
+          <button class="video-card__play" aria-label="Play Featured Reel">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+        </div>
+        <div class="video-card__body">
+          <div class="video-card__badge">Featured Reel</div>
+          <div class="video-card__title">FEATURED REEL</div>
+          <div class="video-card__desc">A cinematic highlight of my finest editorial work — rhythm, colour, and emotion compressed into every frame.</div>
         </div>
       </div>
-      <button onclick="openModal()"
-        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border:1px solid rgba(255,255,255,0.5);border-radius:50%;background:rgba(0,0,0,0.3);color:white;font-size:24px;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .3s;backdrop-filter:blur(4px);"
-        onmouseenter="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
-        onmouseleave="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='white'">▶</button>
     </div>
 
-    <div class="category-tabs reveal">
-      <button class="tab active" onclick="filterReel(this,'all')">All Work</button>
-      <button class="tab" onclick="filterReel(this,'commercial')">Commercials</button>
-      <button class="tab" onclick="filterReel(this,'music')">Music Videos</button>
-      <button class="tab" onclick="filterReel(this,'travel')">Travel Films</button>
-      <button class="tab" onclick="filterReel(this,'youtube')">YouTube</button>
-      <button class="tab" onclick="filterReel(this,'social')">Social Reels</button>
-    </div>
-
-    <div class="reel-grid reveal" id="reel-grid">
-      <div class="reel-card" data-cat="commercial">
-        <div class="reel-thumb"
-          style="background:linear-gradient(135deg,#0d0a04,#1a1205);display:flex;align-items:center;justify-content:center;">
-          <span
-            style="font-family:var(--font-display);font-size:32px;letter-spacing:4px;color:rgba(201,168,76,0.45);">COMMERCIAL</span>
+    <!-- ── COMMERCIAL WORK & MUSIC VIDEOS (2-col) ── -->
+    <div class="showreel-sub-grid reveal" style="margin-top:48px;">
+      <!-- Commercial Work -->
+      <div class="video-card" data-yt-id="CyEoKW6QdAc" data-yt-cat="Commercial Work" data-yt-title="COMMERCIAL WORK">
+        <div class="video-card__thumb">
+          <img class="video-card__thumb-img" src="https://img.youtube.com/vi/CyEoKW6QdAc/hqdefault.jpg" alt="Commercial Work — Kanna Narayana" loading="lazy" />
+          <div class="video-card__gradient"></div>
+          <div class="video-card__shimmer"></div>
+          <button class="video-card__play" aria-label="Play Commercial Work">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
         </div>
-        <div class="reel-overlay">
-          <div class="reel-info">
-            <div class="reel-cat">Commercial</div>
-            <div class="reel-title">Brand Story</div>
-          </div>
+        <div class="video-card__body">
+          <div class="video-card__badge">Commercial Work</div>
+          <div class="video-card__title">COMMERCIAL WORK</div>
+          <div class="video-card__desc">Brand storytelling with cinematic production value — from concept to final grade.</div>
         </div>
-        <div class="play-btn" onclick="openModal()">▶</div>
       </div>
-      <div class="reel-card" data-cat="music">
-        <div class="reel-thumb"
-          style="background:linear-gradient(135deg,#04080d,#0a1220);display:flex;align-items:center;justify-content:center;">
-          <span
-            style="font-family:var(--font-display);font-size:32px;letter-spacing:4px;color:rgba(0,180,220,0.45);">MUSIC
-            VIDEO</span>
+      <!-- Music Videos -->
+      <div class="video-card" data-yt-id="uRd13C3R7K0" data-yt-cat="Music Videos" data-yt-title="MUSIC VIDEOS">
+        <div class="video-card__thumb">
+          <img class="video-card__thumb-img" src="https://img.youtube.com/vi/uRd13C3R7K0/hqdefault.jpg" alt="Music Videos — Kanna Narayana" loading="lazy" />
+          <div class="video-card__gradient"></div>
+          <div class="video-card__shimmer"></div>
+          <button class="video-card__play" aria-label="Play Music Videos">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
         </div>
-        <div class="reel-overlay">
-          <div class="reel-info">
-            <div class="reel-cat">Music Video</div>
-            <div class="reel-title">Night Drive</div>
-          </div>
+        <div class="video-card__body">
+          <div class="video-card__badge">Music Videos</div>
+          <div class="video-card__title">MUSIC VIDEOS</div>
+          <div class="video-card__desc">Visual poetry set to rhythm — kinetic edits, tonal grading, and raw emotion.</div>
         </div>
-        <div class="play-btn" onclick="openModal()">▶</div>
-      </div>
-      <div class="reel-card" data-cat="travel">
-        <div class="reel-thumb"
-          style="background:linear-gradient(135deg,#04080d,#081208);display:flex;align-items:center;justify-content:center;">
-          <span
-            style="font-family:var(--font-display);font-size:32px;letter-spacing:4px;color:rgba(100,200,100,0.45);">TRAVEL
-            FILM</span>
-        </div>
-        <div class="reel-overlay">
-          <div class="reel-info">
-            <div class="reel-cat">Travel</div>
-            <div class="reel-title">Rajasthan Roads</div>
-          </div>
-        </div>
-        <div class="play-btn" onclick="openModal()">▶</div>
-      </div>
-      <div class="reel-card" data-cat="youtube">
-        <div class="reel-thumb"
-          style="background:linear-gradient(135deg,#0d0404,#1a0808);display:flex;align-items:center;justify-content:center;">
-          <span
-            style="font-family:var(--font-display);font-size:32px;letter-spacing:4px;color:rgba(220,60,60,0.45);">YOUTUBE</span>
-        </div>
-        <div class="reel-overlay">
-          <div class="reel-info">
-            <div class="reel-cat">YouTube</div>
-            <div class="reel-title">The Documentary</div>
-          </div>
-        </div>
-        <div class="play-btn" onclick="openModal()">▶</div>
-      </div>
-      <div class="reel-card" data-cat="social">
-        <div class="reel-thumb"
-          style="background:linear-gradient(135deg,#08040d,#140818);display:flex;align-items:center;justify-content:center;">
-          <span
-            style="font-family:var(--font-display);font-size:32px;letter-spacing:4px;color:rgba(180,60,220,0.45);">REELS</span>
-        </div>
-        <div class="reel-overlay">
-          <div class="reel-info">
-            <div class="reel-cat">Social</div>
-            <div class="reel-title">Viral Reel Series</div>
-          </div>
-        </div>
-        <div class="play-btn" onclick="openModal()">▶</div>
-      </div>
-      <div class="reel-card" data-cat="commercial">
-        <div class="reel-thumb"
-          style="background:linear-gradient(135deg,#0d0a04,#1a1205);display:flex;align-items:center;justify-content:center;">
-          <span
-            style="font-family:var(--font-display);font-size:32px;letter-spacing:4px;color:rgba(201,168,76,0.45);">SHORT
-            FILM</span>
-        </div>
-        <div class="reel-overlay">
-          <div class="reel-info">
-            <div class="reel-cat">Short Film</div>
-            <div class="reel-title">Last Light</div>
-          </div>
-        </div>
-        <div class="play-btn" onclick="openModal()">▶</div>
       </div>
     </div>
   </section>
+
+  <!-- ── CINEMATIC YOUTUBE MODAL ── -->
+  <div id="yt-modal">
+    <div class="modal-letterbox modal-letterbox--top"></div>
+    <div class="modal-letterbox modal-letterbox--bottom"></div>
+    <button id="yt-modal-close" onclick="closeYTModal()">✕ CLOSE</button>
+    <div id="yt-modal-frame-wrap">
+      <iframe id="yt-modal-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="modal-title-bar">
+      <div class="modal-title-bar__cat" id="yt-modal-cat"></div>
+      <div class="modal-title-bar__name" id="yt-modal-title"></div>
+    </div>
+  </div>
 
   <!-- ════════════════════════════════ WORKFLOW ═══ -->
   <section id="workflow">
@@ -2017,11 +2090,17 @@
       style="font-style:italic;color:var(--text-dim);max-width:420px;margin:0 auto;text-align:center;font-size:16px;line-height:1.8;">
       Have a story that needs to be told? A brand that needs a heartbeat? Let's talk.</p>
     <div class="contact-grid">
-      <a class="contact-card" href="https://instagram.com" target="_blank">
+      <a class="contact-card" href="https://www.instagram.com/__s__kanna__narayana__?igsh=cnVnaHdoaXo5a3F4"
+        target="_blank">
         <div class="contact-icon">📸</div>
-        <div class="contact-label">Instagram</div>
+        <div class="contact-label">Personal Instagram</div>
       </a>
-      <a class="contact-card" href="https://youtube.com" target="_blank">
+      <a class="contact-card" href="https://www.instagram.com/__ks__eidts__?igsh=MThxbWpwN3c1OXczaw%3D%3D&utm_source=qr"
+        target="_blank">
+        <div class="contact-icon">🎬</div>
+        <div class="contact-label">Editing Instagram</div>
+      </a>
+      <a class="contact-card" href="https://youtube.com/@ks_aep?si=o8TX4iAXJ559iRkJ" target="_blank">
         <div class="contact-icon">▶</div>
         <div class="contact-label">YouTube</div>
       </a>
@@ -2045,15 +2124,7 @@
     &nbsp;|&nbsp; Crafted frame by frame
   </footer>
 
-  <!-- Video Modal -->
-  <div id="modal">
-    <button id="modal-close" onclick="closeModal()">✕ CLOSE</button>
-    <div id="modal-inner">
-      <video id="modal-video" controls style="width:100%;height:100%;object-fit:contain;">
-        <source src="portrait.mp4" type="video/mp4" />
-      </video>
-    </div>
-  </div>
+
 
   <script>
     // ─── CURSOR ───
@@ -2075,7 +2146,7 @@
       requestAnimationFrame(animRing);
     })();
 
-    document.querySelectorAll('a, button, .reel-card, .skill-card, .contact-card, .project-card').forEach(el => {
+    document.querySelectorAll('a, button, .video-card, .skill-card, .contact-card, .project-card').forEach(el => {
       el.addEventListener('mouseenter', () => {
         cursor.style.width = '20px';
         cursor.style.height = '20px';
@@ -2185,39 +2256,54 @@
       });
     });
 
-    // ─── REEL FILTER ───
-    function filterReel(btn, cat) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.reel-card').forEach(card => {
-        if (cat === 'all' || card.dataset.cat === cat) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
+    // ─── VIDEO CARD 3D TILT ───
+    document.querySelectorAll('.video-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg) translateY(-4px)`;
       });
-    }
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+      // Open modal on play button or card click
+      card.addEventListener('click', () => {
+        const ytId = card.dataset.ytId;
+        const cat = card.dataset.ytCat;
+        const title = card.dataset.ytTitle;
+        if (ytId) openYTModal(ytId, cat, title);
+      });
+    });
 
-    // ─── MODAL ───
-    function openModal() {
-      const modal = document.getElementById('modal');
-      const mv = document.getElementById('modal-video');
-      modal.classList.add('open');
-      mv.currentTime = 0;
-      mv.play();
+    // ─── YOUTUBE MODAL ───
+    function openYTModal(ytId, cat, title) {
+      const modal = document.getElementById('yt-modal');
+      const iframe = document.getElementById('yt-modal-iframe');
+      // Embed as Shorts player — autoplay, no branding, loop
+      iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&showinfo=0&controls=1&loop=1&playlist=${ytId}&playsinline=1`;
+      document.getElementById('yt-modal-cat').textContent = cat || '';
+      document.getElementById('yt-modal-title').textContent = title || '';
+      modal.style.display = 'flex';
+      // Trigger reflow for opacity transition
+      requestAnimationFrame(() => { modal.classList.add('open'); });
       document.body.style.overflow = 'hidden';
     }
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      const mv = document.getElementById('modal-video');
+
+    function closeYTModal() {
+      const modal = document.getElementById('yt-modal');
+      const iframe = document.getElementById('yt-modal-iframe');
       modal.classList.remove('open');
-      mv.pause();
+      // Kill iframe to stop playback and free memory
+      iframe.src = '';
       document.body.style.overflow = '';
+      setTimeout(() => { modal.style.display = 'none'; }, 400);
     }
-    document.getElementById('modal').addEventListener('click', function (e) {
-      if (e.target === this) closeModal();
+
+    document.getElementById('yt-modal').addEventListener('click', function (e) {
+      if (e.target === this || e.target.classList.contains('modal-letterbox')) closeYTModal();
     });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeYTModal(); });
 
     // ─── GSAP CINEMATIC SECTION TRANSITIONS ───
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -2301,6 +2387,15 @@
         }
       );
 
+      // Stagger video cards
+      gsap.fromTo('.video-card',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1, y: 0, duration: 0.6, stagger: 0.15,
+          scrollTrigger: { trigger: '#showreel', start: 'top 75%', end: 'top 40%', scrub: 0.5 }
+        }
+      );
+
       // Stagger project cards
       gsap.fromTo('.project-card',
         { opacity: 0, y: 50 },
@@ -2319,17 +2414,6 @@
         }
       );
     }
-
-
-    // Auto-play teaser on hover for reel cards
-    document.querySelectorAll('.reel-card').forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.style.outline = '1px solid rgba(201,168,76,0.4)';
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.outline = '';
-      });
-    });
   </script>
 </body>
 
